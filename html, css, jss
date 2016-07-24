@@ -1,0 +1,76 @@
+<h1>Wikipedia Viewer</h1>
+<p> By Nazanin </p>
+<form id="search-form" onsubmit="return search()">
+	<input id="srch" type="search">
+	<input id="btn" type="submit" value="Search">
+</form>
+	<div id="display"></div>
+<article class="random">
+      <a href="https://en.wikipedia.org/wiki/Special:Random" target="blank">
+        <button type="button" class="btn btn-primary">I'm Feeling Lucky!</button>
+        
+        body {
+	background: #338AFF;
+	color: #FFFFF;
+}
+h1 {
+	font-size: 70px;
+	text-align: center;
+	font-family: "Crimson Text";
+	font-weight: 600;
+	padding-top: 15px;
+	
+}
+p {
+	font-size: 30px;
+	text-align: center;
+	font-family: "Crimson Text";
+	font-weight: 600;
+}
+#search-form {
+	font-size: 24px;
+	margin: 20px 0 40px 0;
+	color: #FFFFF;
+	text-align:center;
+}
+#srch {
+	width: 350px;
+	padding: 10px;
+	height: 42px;
+	background: #FFFFF;
+	border: 1000;	
+}
+.random {
+	text-align: center;
+}
+.entry {
+	border: 2px solid #A5D6A7;
+	border-radius: 10px;
+	background: #33C7FF;
+	margin: 24px 0;
+	padding: 16px;
+}
+.title {
+	font-weight: bold;
+	font-size: 28px;
+}
+.snippet {
+	font-size: 18px;
+}
+
+$('#search-form').submit(function(e){
+	e.preventDefault();
+});
+function search(){
+$("#display").empty();
+	sq = $('#srch').val();	$.getJSON("https://en.wikipedia.org/w/api.php?action=query&list=search&format=json&srsearch="+sq+"&srnamespace=0&srwhat=text&titles=Main%20Page&callback=?", function(d) {
+
+		$.each(d.query.search, function(i, item){
+var wiki = '<div class="entry">'+
+	'<div class="title">'+item.title+'</div>'+
+	'<div class="snippet">'+item.snippet+'</div></div>';
+			$("#display").append(wiki);
+		});
+	});
+$('#srch').val('');
+}
